@@ -1,0 +1,32 @@
+apiVersion: v2
+name: wso2-ei-observability
+description: Helm chart for installing WSO2 Enterprise Integrator observability profile
+type: application
+version: 1.0.0
+appVersion: 7.1.0
+home: https://wso2.com/integration/
+sources:
+  - https://github.com/wso2/micro-integrator
+  - https://github.com/wso2/wso2-synapse
+  - https://github.com/wso2/carbon-mediation
+maintainers:
+  - name: tishan89
+    email: tishan@wso2.com
+dependencies:
+  - name: prometheus
+    version: 11.0.2
+    repository: https://kubernetes-charts.storage.googleapis.com
+    condition: prometheus.enabled
+  - name: grafana
+    version: 5.1.4
+    repository: https://kubernetes-charts.storage.googleapis.com
+    condition: grafana.enabled
+  - name: loki-stack
+    version: 0.33.0
+    repository: https://grafana.github.io/loki/charts
+    condition: loki-stack.enabled
+  - name: jaeger-operator
+    version: 2.15.0
+    repository: https://jaegertracing.github.io/helm-charts
+    condition: jaeger.enabled
+

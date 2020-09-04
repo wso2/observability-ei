@@ -1,0 +1,15 @@
+dependencies:
+- name: prometheus
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 11.0.2
+- name: grafana
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 5.1.4
+- name: loki-stack
+  repository: https://grafana.github.io/loki/charts
+  version: 0.33.0
+- name: jaeger-operator
+  repository: https://jaegertracing.github.io/helm-charts
+  version: 2.15.0
+digest: sha256:0eb95f7ad4da7a45076b956651c4d83bb09138c1370f6ff506c0e1b36871101f
+generated: "2020-07-17T15:32:18.742085+05:30"

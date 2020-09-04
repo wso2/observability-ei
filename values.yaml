@@ -1,0 +1,222 @@
+# Default values for wso2-ei-observability.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+#Configurations related to prometheus depolyment
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: false
+  kubeStateMetrics:
+    enabled: false
+  nodeExporter:
+    enabled: false
+  pushgateway:
+    enabled: false
+  server:
+    service:
+      type: LoadBalancer
+  serverFiles:
+    prometheus.yml:
+      rule_files:
+      - /etc/config/recording_rules.yml
+      - /etc/config/alerting_rules.yml
+      - /etc/config/rules
+      - /etc/config/alerts
+      scrape_configs:
+      - job_name: kubernetes-pods-wso2-integration
+        scrape_interval: 15s
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - action: keep
+          regex: true
+          source_labels:
+          - __meta_kubernetes_pod_annotation_prometheus_io_wso2_scrape
+        - action: replace
+          regex: (.+)
+          source_labels:
+          - __meta_kubernetes_pod_annotation_prometheus_io_wso2_path
+          target_label: __metrics_path__
+        - action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          source_labels:
+          - __address__
+          - __meta_kubernetes_pod_annotation_prometheus_io_wso2_port
+          target_label: __address__
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+        - action: replace
+          source_labels:
+          - __meta_kubernetes_namespace
+          target_label: kubernetes_namespace
+        - action: replace
+          source_labels:
+          - __meta_kubernetes_pod_name
+          target_label: kubernetes_pod_name
+        - action: replace
+          source_labels:
+          - __meta_kubernetes_pod_name
+          target_label: instance
+      - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        job_name: kubernetes-nodes
+        kubernetes_sd_configs:
+        - role: node
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - replacement: kubernetes.default.svc:443
+          target_label: __address__
+        - regex: (.+)
+          replacement: /api/v1/nodes/$1/proxy/metrics
+          source_labels:
+          - __meta_kubernetes_node_name
+          target_label: __metrics_path__
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+      alerting:
+        alertmanagers:
+        - kubernetes_sd_configs:
+            - role: pod
+          tls_config:
+            ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace]
+            regex: default
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            regex: prometheus
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_label_component]
+            regex: alertmanager
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_probe]
+            regex: .*
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_container_port_number]
+            regex:
+            action: drop
+
+#Configurations related to grafana depolyment
+grafana:
+  enabled: true
+  service:
+    type: LoadBalancer
+  persistence:
+    enabled: true
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://{{ .Release.Name }}-prometheus-server
+        access: proxy
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://{{ .Release.Name }}-loki:3100
+      - name: Jaeger
+        type: jaeger
+        url: http://{{ .Release.Name }}-query:16686
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards
+  dashboards:
+    default:
+      WSO2-MI-Cluster-Metrics:
+        gnetId: 12783
+        revision: 1
+        datasource: Prometheus
+      WSO2-MI-Node-Metrics:
+        gnetId: 12887
+        revision: 1
+        datasource: Prometheus
+      WSO2-Observerbility-Proxy:
+        gnetId: 12889
+        revision: 1
+        datasource: Prometheus
+      WSO2-Observerbility-API:
+        gnetId: 12888
+        revision: 1
+        datasource: Prometheus
+      WSO2-Observerbility-Inbound-Endpoint:
+        gnetId: 12890
+        revision: 1
+        datasource: Prometheus
+
+#Configurations related to loki depolyment
+loki-stack:
+  enabled: false
+  fluent-bit:
+    enabled: true
+    config:
+      labels: '{job="wso2"}'
+      k8sLoggingParser: 'On'
+      labelMap:
+        kubernetes:
+          host: node
+          labels:
+            app: app
+            release: release
+          namespace_name: namespace
+          pod_name: instance
+        log_level: log_level
+        service: service
+      parsers:
+      - Name: wso2
+        Format: regex
+        Time_Key: date
+        Time_Format: "%Y-%m-%d %H:%M:%S,%L"
+        Regex: \[(?<date>\d{2,4}\-\d{2,4}\-\d{2,4} \d{2,4}\:\d{2,4}\:\d{2,4}\,\d{1,6})\]  (?<log_level>[^\s]+) \{(?<class>[\s\S]*)\} ([-]) (?<service>\{[\s\S]*\})?(?<message>.*)
+  promtail:
+    enabled: false
+
+#Configurations related to jaeger depolyment
+jaeger:
+  enabled: false
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
