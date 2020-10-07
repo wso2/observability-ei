@@ -6,13 +6,13 @@ WSO2 Enterprise Integrator offers observability capabilities based on
 business analytics functionality together with observability related 
 features. Users with comprehensive observability requirements had to 
 rely on external tools/stacks such as ELK, Prometheus, AppDynamics, Jaeger, 
-Zipkin, etc. This resulted in multiple scattered systems to observe the 
-system where debugging and troubleshooting were not sufficiently stream-lined.
+Zipkin, etc. However this will result in multiple scattered systems to observe the system where debugging 
+and troubleshooting will not be sufficiently stream-lined.
 
 2. [Cloud Native Observability Deployment](cloud-native/README.md) - 
 allows you to monitor and troubleshoot you WSO2 Enterprise Integrator system
  with ease. This solution is based on proven projects in Cloud Native Computing Foundation to be cloud native and future proof. Also, this technology stack allows you to view and correlate all three pillars of observability (i.e., metrics, logging, and tracing) from a single location instead of using several tools, thereby unifying the monitoring experience. The selected set of external tools are:
-- Metrics - Prometheus
-- Visualization - Grafana
-- Logging - Fluent-Bit and Grafana Loki
-- Tracing - Jaeger
+    - Metrics - Prometheus
+    - Visualization - Grafana
+    - Logging - Fluent-Bit and Grafana Loki
+    - Tracing - Jaeger
