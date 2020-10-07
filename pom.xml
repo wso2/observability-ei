@@ -385,7 +385,7 @@
         <!-- dashboard version-->
         <analytics.dashboard.version>1.0.0</analytics.dashboard.version>
         <carbon.uis.version>1.0.6</carbon.uis.version>
-        <analytics.solutions.version>1.0.54-SNAPSHOT</analytics.solutions.version>
+        <analytics.solutions.version>1.0.56</analytics.solutions.version>
 
         <carbon.metrics.version>2.3.13</carbon.metrics.version>
         <carbon.jndi.version>1.0.5</carbon.jndi.version>
