@@ -47,29 +47,29 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>target/streaming-integrator/wso2si-${streaming.integrator.version}</directory>
+            <directory>target/wso2si-${streaming.integrator.version}</directory>
             <outputDirectory>wso2ei-analytics-${pom.version}</outputDirectory>
+            <excludes>
+                <exclude>**/resources/security/client-truststore.jks</exclude>
+                <exclude>**/resources/security/wso2carbon.jks</exclude>
+            </excludes>
             <fileMode>775</fileMode>
         </fileSet>
         <fileSet>
-            <directory>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/conf/monitor</directory>
-            <outputDirectory>wso2ei-analytics-${pom.version}/conf/monitor</outputDirectory>
-            <fileMode>664</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/conf/portal</directory>
+            <directory>target/wso2ad-${analytics.dashboard.version}/conf/portal</directory>
             <outputDirectory>wso2ei-analytics-${pom.version}/conf/portal</outputDirectory>
             <fileMode>664</fileMode>
         </fileSet>
+
         <fileSet>
-            <directory>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/wso2/portal/conf</directory>
-            <outputDirectory>wso2ei-analytics-${pom.version}/wso2/portal/conf</outputDirectory>
+            <directory>target/wso2ad-${analytics.dashboard.version}/wso2/portal/database</directory>
+            <outputDirectory>wso2ei-analytics-${pom.version}/wso2/portal/database</outputDirectory>
             <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/wso2/monitor/conf</directory>
-            <outputDirectory>wso2ei-analytics-${pom.version}/wso2/monitor/conf</outputDirectory>
-            <fileMode>755</fileMode>
+            <directory>target/wso2carbon-core-${carbon.kernel4.version}/repository/resources/security</directory>
+            <outputDirectory>wso2ei-analytics-${pom.version}/resources/security</outputDirectory>
+            <fileMode>644</fileMode>
         </fileSet>
     </fileSets>
     <files>
@@ -81,25 +81,20 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/bin/portal.sh</source>
+            <source>src/conf/portal/deployment.yaml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/conf/portal</outputDirectory>
+            <destName>deployment.yaml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>target/wso2ad-${analytics.dashboard.version}/bin/portal.sh</source>
             <outputDirectory>wso2ei-analytics-${pom.version}/bin</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/bin/portal.bat</source>
-            <outputDirectory>wso2ei-analytics-${pom.version}/bin</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/bin/monitor.sh</source>
-            <outputDirectory>wso2ei-analytics-${pom.version}/bin</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>target/analytics-dashboard/wso2ad-${analytics.dashboard.version}/bin/monitor.bat</source>
+            <source>target/wso2ad-${analytics.dashboard.version}/bin/portal.bat</source>
             <outputDirectory>wso2ei-analytics-${pom.version}/bin</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
