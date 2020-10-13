@@ -578,6 +578,141 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>docker-config-file</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/docker-distribution/conf</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/docker/conf</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>docker-lib-file</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/docker-distribution/lib</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/docker/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <skip>${docker.skip}</skip>
+                            <target>
+                                <echo message="prepare phase" />
+                                <unzip src="${project.build.directory}/wso2ei-analytics-${project.version}.zip" dest="${project.build.directory}/docker" />
+                                <move file="${project.build.directory}/docker/wso2ei-analytics-${project.version}" tofile="${project.build.directory}/docker/wso2ei-analytics" />
+                                <copy todir="${project.build.directory}/docker/wso2ei-analytics/lib">
+                                    <fileset dir="${project.build.directory}/docker/lib">
+                                        <include name="*.jar"/>
+                                    </fileset>
+                                </copy>
+                                <move file="${project.build.directory}/docker/conf/deployment_portal.yaml" tofile="${project.build.directory}/docker/wso2ei-analytics/conf/portal/deployment.yaml" />
+                                <move file="${project.build.directory}/docker/conf/deployment_server.yaml" tofile="${project.build.directory}/docker/wso2ei-analytics/conf/server/deployment.yaml" />
+                                <chmod file="${project.build.directory}/docker/wso2ei-analytics/bin/*.sh" perm="+x" />
+                                <chmod file="${project.build.directory}/docker/wso2ei-analytics/wso2/server/bin/*.sh" perm="+x" />
+                                <chmod file="${project.build.directory}/docker/wso2ei-analytics/wso2/portal/bin/*.sh" perm="+x" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-image-server</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <skipDocker>${docker.skip}</skipDocker>
+                            <imageName>wso2/ei-analytics-server</imageName>
+                            <imageTags>
+                                <tag>${project.version}</tag>
+                            </imageTags>
+                            <dockerDirectory>${basedir}/src/docker-distribution/static/server</dockerDirectory>
+                        </configuration>
+                    </execution>
+                    <!-- TODO Enable after configuring Jenkins to push docker -->
+                    <!--                    <execution>-->
+                    <!--                    <id>push-image</id>-->
+                    <!--                    <phase>deploy</phase>-->
+                    <!--                    <goals>-->
+                    <!--                    <goal>push</goal>-->
+                    <!--                    </goals>-->
+                    <!--                    <configuration>-->
+                    <!--                    <imageName>wso2/enterprise-integrator-analytics:${project.version}</imageName>-->
+                    <!--                    </configuration>-->
+                    <!--                    </execution>-->
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-image-portal</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <skipDocker>${docker.skip}</skipDocker>
+                            <imageName>wso2/ei-analytics-portal</imageName>
+                            <imageTags>
+                                <tag>${project.version}</tag>
+                            </imageTags>
+                            <dockerDirectory>${basedir}/src/docker-distribution/static/portal</dockerDirectory>
+                        </configuration>
+                    </execution>
+                    <!-- TODO Enable after configuring Jenkins to push docker -->
+                    <!--                    <execution>-->
+                    <!--                    <id>push-image</id>-->
+                    <!--                    <phase>deploy</phase>-->
+                    <!--                    <goals>-->
+                    <!--                    <goal>push</goal>-->
+                    <!--                    </goals>-->
+                    <!--                    <configuration>-->
+                    <!--                    <imageName>wso2/enterprise-integrator-analytics:${project.version}</imageName>-->
+                    <!--                    </configuration>-->
+                    <!--                    </execution>-->
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
@@ -608,4 +743,9 @@
 
         </plugins>
     </build>
+
+    <properties>
+        <docker.skip>false</docker.skip>
+    </properties>
+
 </project>

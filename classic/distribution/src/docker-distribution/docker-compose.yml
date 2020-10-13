@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql
+    restart: always
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=EI_ANALYTICS
+    expose:
+      - 3306
+    ports:
+      - 3308:3306
+  portal:
+    image: wso2/ei-analytics-portal:latest
+    environment:
+      mysql_server_name: localhost
+      mysql_port: 3308
+      mysql_databasename: EI_ANALYTICS
+      mysql_username: root
+      mysql_password: root
+    depends_on:
+      - mysql
+    expose:
+      - 9645
+    ports:
+      - 9645:9645
