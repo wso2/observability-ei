@@ -401,9 +401,9 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:mysql://${mysql.servername}:${mysql.port}/${mysql.databasename}?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false'
-          username: ${mysql.username}
-          password: ${mysql.password}
+          jdbcUrl: 'jdbc:mysql://${mysql_server_name}:${mysql_port}/${mysql_databasename}?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false'
+          username: ${mysql_username}
+          password: ${mysql_password}
           driverClassName: com.mysql.jdbc.Driver
           maxPoolSize: 50
           idleTimeout: 60000
