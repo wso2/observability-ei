@@ -745,7 +745,7 @@
     </build>
 
     <properties>
-        <docker.skip>false</docker.skip>
+        <docker.skip>true</docker.skip>
     </properties>
 
 </project>
