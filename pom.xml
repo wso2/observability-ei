@@ -44,12 +44,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wso2.carbon.config</groupId>
-                <artifactId>org.wso2.carbon.config.feature</artifactId>
-                <version>${carbon.config.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>wso2ad</artifactId>
                 <version>${analytics.dashboard.version}</version>
