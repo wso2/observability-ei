@@ -52,6 +52,7 @@
             <excludes>
                 <exclude>**/resources/security/client-truststore.jks</exclude>
                 <exclude>**/resources/security/wso2carbon.jks</exclude>
+                <exclude>**/README.md</exclude>
             </excludes>
             <fileMode>775</fileMode>
         </fileSet>
@@ -98,6 +99,18 @@
             <outputDirectory>wso2ei-analytics-${pom.version}/bin</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>src/LICENSE.txt</source>
+            <outputDirectory>wso2ei-analytics-${pom.version}</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/README.txt</source>
+            <outputDirectory>wso2ei-analytics-${pom.version}</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
         </file>
     </files>
 </assembly>
