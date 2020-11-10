@@ -53,6 +53,7 @@
                 <exclude>**/resources/security/client-truststore.jks</exclude>
                 <exclude>**/resources/security/wso2carbon.jks</exclude>
                 <exclude>**/README.md</exclude>
+                <exclude>**/updates/product.txt</exclude>
             </excludes>
             <fileMode>775</fileMode>
         </fileSet>
@@ -109,6 +110,12 @@
         <file>
             <source>src/README.txt</source>
             <outputDirectory>wso2ei-analytics-${pom.version}</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/resources/updates/product.txt</source>
+            <outputDirectory>wso2ei-analytics-${pom.version}/updates</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
