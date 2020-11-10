@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2-ei-observability-parent</artifactId>
     <packaging>pom</packaging>
-    <version>7.1.1-SNAPSHOT</version>
+    <version>7.1.0</version>
     <name>WSO2 EI Observability</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Observability Solution for Enterprise Integrator</description>
@@ -288,7 +288,7 @@
         <url>https://github.com/wso2/observability-ei.git</url>
         <developerConnection>scm:git:https://github.com/wso2/observability-ei.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/observability-ei.git</connection>
-        <tag>HEAD</tag>
+        <tag>v7.1.0</tag>
     </scm>
 
     <profiles>
