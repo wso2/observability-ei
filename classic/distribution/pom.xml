@@ -556,7 +556,7 @@
                                 <delete dir="target/p2-repo" />
                                 <delete file="target/tmp" />
                                 <delete dir="target/wso2ad-${analytics.dashboard.version}" />
-                                <delete dir="target/wso2carbon-core-${carbon.kernel5.version}" />
+                                <delete dir="target/wso2carbon-core-${carbon.kernel4.version}" />
                                 <delete dir="target/wso2si-${streaming.integrator.version}" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/maven-shared-archive-resources" />
