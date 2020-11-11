@@ -54,6 +54,7 @@
                 <exclude>**/resources/security/wso2carbon.jks</exclude>
                 <exclude>**/README.md</exclude>
                 <exclude>**/updates/product.txt</exclude>
+                <exclude>**/bin/*.txt</exclude>
             </excludes>
             <fileMode>775</fileMode>
         </fileSet>
