@@ -157,7 +157,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "max(time()-wso2_integration_server_up{instance=\"[[node]]\"})",
+          "expr": "max(time()-wso2_integration_server_up{instance=~\"$node\"})",
           "format": "time_series",
           "instant": false,
           "interval": "30s",
@@ -213,7 +213,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "count(wso2_integration_service_up{instance=\"[[node]]\"})",
+          "expr": "count(wso2_integration_service_up{instance=~\"$node\"})",
           "instant": true,
           "interval": "30s",
           "legendFormat": "Current",
@@ -279,7 +279,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(process_cpu_seconds_total{instance=\"[[node]]\"}[$__interval])",
+          "expr": "rate(process_cpu_seconds_total{instance=~\"$node\"}[$__interval])",
           "interval": "1m",
           "legendFormat": "{{instance}}",
           "refId": "A"
@@ -382,13 +382,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_memory_bytes_max{instance=\"[[node]]\",area=\"heap\"}",
+          "expr": "jvm_memory_bytes_max{instance=~\"$node\",area=\"heap\"}",
           "interval": "",
           "legendFormat": "Max",
           "refId": "A"
         },
         {
-          "expr": "jvm_memory_bytes_used{instance=\"[[node]]\", area=\"heap\"}",
+          "expr": "jvm_memory_bytes_used{instance=~\"$node\", area=\"heap\"}",
           "interval": "",
           "legendFormat": "Used",
           "refId": "B"
@@ -571,7 +571,7 @@
       ],
       "targets": [
         {
-          "expr": "sum by(service_name,service_type, start_time) (wso2_integration_service_up{instance=\"[[node]]\"}*1000>0)",
+          "expr": "sum by(service_name,service_type, start_time) (wso2_integration_service_up{instance=~\"$node\"}*1000>0)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -639,7 +639,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum((max_over_time({__name__ =~\"wso2_integration_.*_request_count_total\",instance=\"[[node]]\"}[$__range]))-  (min_over_time({__name__ =~\"wso2_integration_.*_request_count_total\",instance=\"[[node]]\"}[$__range])))",
+          "expr": "sum((max_over_time({__name__ =~\"wso2_integration_.*_request_count_total\",instance=~\"$node\"}[$__range]))-  (min_over_time({__name__ =~\"wso2_integration_.*_request_count_total\",instance=~\"$node\"}[$__range])))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -703,7 +703,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum((max_over_time({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=\"[[node]]\"}[$__range]))- (min_over_time({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=\"[[node]]\"}[$__range])))",
+          "expr": "sum((max_over_time({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=~\"$node\"}[$__range]))- (min_over_time({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=~\"$node\"}[$__range])))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -769,25 +769,25 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "jvm_threads_state{instance=\"[[node]]\", state=\"RUNNABLE\"}",
+          "expr": "jvm_threads_state{instance=~\"$node\", state=\"RUNNABLE\"}",
           "interval": "30s",
           "legendFormat": "Runnable",
           "refId": "A"
         },
         {
-          "expr": "jvm_threads_state{instance=\"[[node]]\", state=\"WAITING\"} ",
+          "expr": "jvm_threads_state{instance=~\"$node\", state=\"WAITING\"} ",
           "interval": "30s",
           "legendFormat": "Waiting",
           "refId": "B"
         },
         {
-          "expr": "jvm_threads_state{instance=\"[[node]]\", state=\"BLOCKED\"}",
+          "expr": "jvm_threads_state{instance=~\"$node\", state=\"BLOCKED\"}",
           "interval": "30s",
           "legendFormat": "Blocked",
           "refId": "C"
         },
         {
-          "expr": "jvm_threads_state{instance=\"[[node]]\", state=\"TIMED_WAITING\"}",
+          "expr": "jvm_threads_state{instance=~\"$node\", state=\"TIMED_WAITING\"}",
           "interval": "",
           "legendFormat": "Timed Waiting",
           "refId": "D"
@@ -893,13 +893,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "process_open_fds{instance=\"[[node]]\"}",
+          "expr": "process_open_fds{instance=~\"$node\"}",
           "interval": "",
           "legendFormat": "Open",
           "refId": "A"
         },
         {
-          "expr": "process_max_fds{instance=\"[[node]]\"}",
+          "expr": "process_max_fds{instance=~\"$node\"}",
           "interval": "",
           "legendFormat": "Max",
           "refId": "B"
@@ -996,7 +996,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate({__name__ =~\"wso2_integration_.*_request_count_total\",instance=\"[[node]]\"}[$__interval]))",
+          "expr": "sum(rate({__name__ =~\"wso2_integration_.*_request_count_total\",instance=~\"$node\"}[$__interval]))",
           "interval": "70s",
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",
@@ -1095,7 +1095,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=\"[[node]]\"}[$__interval]))",
+          "expr": "sum(rate({__name__ =~\"wso2_integration_.*_request_count_error_total\",instance=~\"$node\"}[$__interval]))",
           "interval": "1m",
           "legendFormat": "{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1191,7 +1191,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate({__name__ =~\"wso2_integration_.*_latency_seconds\", instance=\"[[node]]\", le=~\".+\"}[10m])) by (le))",
+          "expr": "histogram_quantile(0.5, sum(rate({__name__ =~\"wso2_integration_.*_latency_seconds\", instance=~\"$node\", le=~\".+\"}[10m])) by (le))",
           "format": "time_series",
           "hide": false,
           "interval": "1m",
@@ -1199,7 +1199,7 @@
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate({__name__ =~\"wso2_integration_.*_latency_seconds\", instance=\"[[node]]\", le=~\".+\"}[10m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate({__name__ =~\"wso2_integration_.*_latency_seconds\", instance=~\"$node\", le=~\".+\"}[10m])) by (le))",
           "interval": "",
           "legendFormat": "95th Percentile",
           "refId": "B"
@@ -1272,7 +1272,7 @@
       },
       "targets": [
         {
-          "expr": "{instance=\"[[node]]\"}",
+          "expr": "{instance=~\"$node\"}",
           "refId": "A"
         }
       ],
@@ -1332,5 +1332,6 @@
   "timezone": "",
   "title": "WSO2 Integration Node Metrics",
   "uid": "wso2-mi-node-metrics",
-  "version": 1
+  "version": 1,
+  "description": "This Dashboard provides an overview of a single WSO2 integration nodes"
 }
