@@ -45,7 +45,7 @@ $ helm install wso2-observability . --render-subchart-notes
 To install the basic chart with tracing having the release name `wso2-observability`:
 
 #### Install cert-manager
-Make sure cert-manager CRDs are installed. 3. Setting up cert-manager is a prerequisite for deploying the jaeger-operator helm chart.
+Make sure cert-manager CRDs are installed. Setting up cert-manager is a prerequisite for deploying the jaeger-operator helm chart.
 
 1. Execute the below command to see if CRDs are already installed.
 ```
