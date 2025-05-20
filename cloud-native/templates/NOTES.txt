@@ -1,12 +1,13 @@
-WSO2 Observability Solution has now been deployed to your cluster. Under default install you can access Prometheus and Grafana UIs. 
+WSO2 Observability Solution has now been deployed to your cluster. With the default installion, you can set up 
+the minimum deployment for metrics monitoring with Prometheus and Grafana.
 For that please refer above notes. If you can't observe notes above please make sure that you have added 
-'--render-subchart-notes' parameter when invoking Helm install command.
-Ex: helm install wso2-observability . --render-subchart-notes
+'--render-subchart-notes' parameter when invoking the helm install command.
+Eg: helm install wso2-observability . --render-subchart-notes
+You can also view the chart notes after the installation by invoking the helm get notes command.
+Eg: helm get notes wso2-observability
 
-If you enable Jaeger section you can also access Jaeger UI. URL will be shown above.
+If you enable Jaeger you can also enable message tracing and access the Jaeger UI.
 
-If you enable loki stack, please note that widgets which use Loki datasources must be manually configured to correct datasource due to a limitation
-in current Grafana Helm charts. Once you install the chart log widgets will have their datasource set to Promethues.
-Please manually change them into loki datasource which is added by the chart.
-
-
+If you enable loki stack, please note that the widgets using Loki datasources must be manually configured to use the 
+correct datasource due to limitations in the current Grafana Helm charts. Once you install the chart, log widgets will have their datasource set to Promethues.
+Please manually change them to loki datasource added during the chart installation.

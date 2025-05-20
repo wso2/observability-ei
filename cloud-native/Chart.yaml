@@ -29,19 +29,19 @@ maintainers:
     email: tishan@wso2.com
 dependencies:
   - name: prometheus
-    version: 11.0.2
-    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 27.8.0
+    repository: https://prometheus-community.github.io/helm-charts
     condition: prometheus.enabled
   - name: grafana
-    version: 5.1.4
-    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 8.11.3
+    repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: loki-stack
-    version: 0.33.0
-    repository: https://grafana.github.io/loki/charts
+    version: 2.10.2
+    repository: https://grafana.github.io/helm-charts
     condition: loki-stack.enabled
   - name: jaeger-operator
-    version: 2.15.0
+    version: 2.57.0
     repository: https://jaegertracing.github.io/helm-charts
-    condition: jaeger.enabled
+    condition: jaeger-operator.enabled
 

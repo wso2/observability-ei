@@ -1,15 +1,15 @@
 dependencies:
 - name: prometheus
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 11.0.2
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 27.8.0
 - name: grafana
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 5.1.4
+  repository: https://grafana.github.io/helm-charts
+  version: 8.11.3
 - name: loki-stack
-  repository: https://grafana.github.io/loki/charts
-  version: 0.33.0
+  repository: https://grafana.github.io/helm-charts
+  version: 2.10.2
 - name: jaeger-operator
   repository: https://jaegertracing.github.io/helm-charts
-  version: 2.15.0
-digest: sha256:0eb95f7ad4da7a45076b956651c4d83bb09138c1370f6ff506c0e1b36871101f
-generated: "2020-07-17T15:32:18.742085+05:30"
+  version: 2.57.0
+digest: sha256:5095b8524452a7fcdfb883b403f491ab44448506eef8601148d0e246a4fa4e01
+generated: "2025-04-08T16:53:44.78692+05:30"
