@@ -22,19 +22,14 @@ prometheus:
   enabled: true
   alertmanager:
     enabled: false
-  kubeStateMetrics:
-    enabled: false
-  nodeExporter:
-    enabled: false
-  pushgateway:
-    enabled: false
+  kube-state-metrics:
+    enabled: true
+  prometheus-node-exporter:
+    enabled: true
+  prometheus-pushgateway:
+    enabled: true
   serverFiles:
     prometheus.yml:
-      rule_files:
-      - /etc/config/recording_rules.yml
-      - /etc/config/alerting_rules.yml
-      - /etc/config/rules
-      - /etc/config/alerts
       scrape_configs:
       - job_name: kubernetes-pods-wso2-integration
         scrape_interval: 15s
